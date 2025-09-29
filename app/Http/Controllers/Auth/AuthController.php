@@ -17,6 +17,7 @@ class AuthController extends Controller
      * Login user and create token
      */
     public function login(Request $request)
+    {
         \Log::info('Login request received', $request->all());
         try {
             // ...existing login logic...
@@ -28,8 +29,7 @@ class AuthController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
-    {
-        $validator = Validator::make($request->all(), [
+    $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
         ]);

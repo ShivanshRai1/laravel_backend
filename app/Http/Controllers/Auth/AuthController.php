@@ -17,6 +17,17 @@ class AuthController extends Controller
      * Login user and create token
      */
     public function login(Request $request)
+        \Log::info('Login request received', $request->all());
+        try {
+            // ...existing login logic...
+        } catch (\Exception $e) {
+            \Log::error('Login error: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Server Error',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',

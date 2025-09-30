@@ -2,11 +2,11 @@
 
 return [
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
-    'allowed_methods' => ['*'],
-    'allowed_origins' => ['https://react-frontend-mauve-six.vercel.app'],
+    'allowed_methods' => ['*'], // Allow all HTTP methods
+    'allowed_origins' => ['https://react-frontend-mauve-six.vercel.app'], //frontend domain
     'allowed_origins_patterns' => [],
-    'allowed_headers' => ['*'],
+    'allowed_headers' => ['*'], // Allow all headers
     'exposed_headers' => [],
     'max_age' => 0,
-    'supports_credentials' => true,
+    'supports_credentials' => true, // Enable cookies/auth headers passing
 ];

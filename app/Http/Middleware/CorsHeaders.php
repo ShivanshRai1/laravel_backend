@@ -1,5 +1,5 @@
 <?php
-
+/*
 namespace App\Http\Middleware;
 
 use Closure;
@@ -32,4 +32,4 @@ class CorsHeaders
         
         return $response;
     }
-}
+}*/

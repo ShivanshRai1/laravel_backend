@@ -10,9 +10,8 @@ class Kernel extends HttpKernel
      * The application's global HTTP middleware stack.
      */
     protected $middleware = [
-        // Handles CORS
-        \App\Http\Middleware\CorsHeaders::class,
-        // ...other default middleware...
+        
+        \Illuminate\Http\Middleware\HandleCors::class,  // Laravel 12 native CORS middleware
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,

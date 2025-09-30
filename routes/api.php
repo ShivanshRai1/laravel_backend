@@ -23,6 +23,16 @@ use App\Http\Controllers\UserController;
 |
 */
 
+// Test route for CORS debugging
+Route::get('/test-cors', function () {
+    return response()->json(['message' => 'CORS test successful', 'timestamp' => now()]);
+});
+
+// Handle OPTIONS requests for CORS
+Route::options('{any}', function () {
+    return response('', 200);
+})->where('any', '.*');
+
 // Public authentication routes
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/admin-login', [AuthController::class, 'adminLogin']);

@@ -20,6 +20,12 @@ class CorsMiddleware
         $method = $request->getMethod();
         $path = $request->getPathInfo();
         
+        // Direct file logging to ensure we capture everything
+        file_put_contents(storage_path('logs/cors-debug.log'), 
+            '[' . now() . '] CORS Request: ' . $method . ' ' . $path . ' from origin: ' . ($origin ?: 'null') . PHP_EOL, 
+            FILE_APPEND | LOCK_EX
+        );
+        
         // Log incoming request details
         Log::info('CORS Middleware - Incoming Request', [
             'method' => $method,
@@ -81,6 +87,12 @@ class CorsMiddleware
             Log::info('CORS Middleware - Preflight response headers set', [
                 'response_headers' => $response->headers->all()
             ]);
+            
+            // Also write to Laravel log file directly to ensure it shows up
+            file_put_contents(storage_path('logs/cors-debug.log'), 
+                '[' . now() . '] OPTIONS request handled for origin: ' . $origin . PHP_EOL, 
+                FILE_APPEND | LOCK_EX
+            );
             
             return $response;
         }

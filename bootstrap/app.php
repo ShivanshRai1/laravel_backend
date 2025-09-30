@@ -12,6 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Disable Laravel's built-in CORS middleware
+        $middleware->remove(\Illuminate\Http\Middleware\HandleCors::class);
+        
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
             'cors' => \App\Http\Middleware\CorsMiddleware::class,

@@ -11,6 +11,7 @@ return [
         'http://127.0.0.1:3001',
         'http://127.0.0.1:3002',
         'http://127.0.0.1:3003',
+        env('FRONTEND_URL', 'https://dashboard-react-main.netlify.app'),
     ],
     // Allow any case for localhost using a regex pattern
     'allowed_origins_patterns' => [
@@ -20,5 +21,5 @@ return [
     'allowed_headers' => ['*'],
     'exposed_headers' => [],
     'max_age' => 0,
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 ];

@@ -23,14 +23,21 @@ class Company extends Model
 
     protected $casts = [
         'market_cap' => 'decimal:2',
+        'employees' => 'integer',
     ];
 
+    /**
+     * Get financial data for this company
+     */
     public function financialData(): HasMany
     {
         return $this->hasMany(FinancialData::class);
     }
 
-    public function watchlists(): HasMany
+    /**
+     * Get watchlist entries for this company
+     */
+    public function watchlistEntries(): HasMany
     {
         return $this->hasMany(Watchlist::class);
     }

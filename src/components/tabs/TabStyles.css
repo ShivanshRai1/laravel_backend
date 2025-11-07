@@ -1,0 +1,425 @@
+/* Tab Content Styles */
+
+.tab-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tab-header h2 {
+  margin: 0 0 8px 0;
+  color: #2c3e50;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.tab-header p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 16px;
+}
+
+/* Metrics Grid Layout */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.metric-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+}
+
+.metric-header h3, .metric-header h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.toggle-table-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggle-table-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.metric-content {
+  padding: 20px;
+}
+
+.chart-container {
+  min-height: 300px;
+  border-radius: 8px;
+  background: #fafafa;
+  padding: 16px;
+}
+
+/* Charts Tab Specific Styles */
+.key-metrics-section {
+  margin-bottom: 48px;
+}
+
+.key-metrics-section h3 {
+  text-align: center;
+  color: #2c3e50;
+  font-size: 24px;
+  margin-bottom: 32px;
+  padding: 16px;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border-radius: 8px;
+}
+
+.key-charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+  gap: 32px;
+}
+
+.key-metric-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 2px solid #e9ecef;
+}
+
+.key-metric-header {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.key-metric-header h4 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.time-range {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.key-metric-content {
+  padding: 24px;
+}
+
+.key-chart-container {
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.chart-legend {
+  text-align: center;
+}
+
+.legend-companies {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.legend-item {
+  padding: 6px 12px;
+  border-radius: 16px;
+  background: #f8f9fa;
+  font-size: 12px;
+  font-weight: 500;
+  color: #495057;
+}
+
+/* Charts Insights */
+.charts-insights {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 16px;
+  padding: 32px;
+  margin-top: 48px;
+}
+
+.charts-insights h3 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 24px;
+  font-size: 24px;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.insight-card {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #007bff;
+}
+
+.insight-card h4 {
+  margin: 0 0 12px 0;
+  color: #2c3e50;
+  font-size: 18px;
+}
+
+.insight-card p {
+  margin: 0;
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+/* News & Analysis Tab Styles */
+.content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+}
+
+.news-section, .analysis-section {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.news-section h3, .analysis-section h3 {
+  margin: 0 0 24px 0;
+  color: #2c3e50;
+  font-size: 22px;
+  text-align: center;
+  padding-bottom: 16px;
+  border-bottom: 3px solid #e9ecef;
+}
+
+.news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.news-item {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 16px;
+  transition: all 0.3s ease;
+}
+
+.news-item:hover {
+  border-color: #007bff;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+}
+
+.news-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.news-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.company-tag {
+  background: #007bff;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.news-date {
+  color: #6c757d;
+  font-size: 12px;
+}
+
+.news-indicators {
+  display: flex;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.news-title {
+  margin: 0 0 8px 0;
+  color: #2c3e50;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.news-summary {
+  margin: 0;
+  color: #6c757d;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Market Trends */
+.trends-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.trend-item {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  border-left: 4px solid #28a745;
+}
+
+.trend-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.trend-header h4 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 16px;
+}
+
+.trend-indicator {
+  font-size: 12px;
+  font-weight: 500;
+  color: #28a745;
+}
+
+.trend-description {
+  margin: 0 0 12px 0;
+  color: #6c757d;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.trend-leaders {
+  font-size: 13px;
+  color: #495057;
+}
+
+/* Market Outlook */
+.market-outlook {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 24px;
+}
+
+.market-outlook h4 {
+  margin: 0 0 20px 0;
+  text-align: center;
+  color: #2c3e50;
+  font-size: 18px;
+}
+
+.outlook-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.outlook-item {
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.outlook-item.bullish {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border-left: 4px solid #28a745;
+}
+
+.outlook-item.bearish {
+  background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+  border-left: 4px solid #dc3545;
+}
+
+.outlook-item h5 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+}
+
+.outlook-item ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.outlook-item li {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .outlook-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .key-charts-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tab-header {
+    padding: 16px;
+  }
+  
+  .tab-header h2 {
+    font-size: 24px;
+  }
+}

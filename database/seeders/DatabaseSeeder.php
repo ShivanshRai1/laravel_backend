@@ -46,5 +46,8 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => now(),
             ]);
         }
+
+        // Seed companies for all users
+        $this->call(CompanySeeder::class);
     }
 }

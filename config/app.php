@@ -11,10 +11,11 @@ return [
     | This value is the name of your application, which will be used when the
     | framework needs to place the application's name in a notification or
     | other UI elements where an application name needs to be displayed.
-       /*
-        * Package Service Providers...
-        */
-       Maatwebsite\Excel\ExcelServiceProvider::class,
+    /*
+     * Package Service Providers...
+     */
+    Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+    Maatwebsite\Excel\ExcelServiceProvider::class,
     'name' => env('APP_NAME', 'Laravel'),
 
     /*

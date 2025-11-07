@@ -35,4 +35,19 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Firebase Cloud Messaging (FCM) Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Configure your Firebase Cloud Messaging credentials for push notifications.
+    | Get your Server Key from Firebase Console:
+    | Project Settings > Cloud Messaging > Server Key (Legacy)
+    |
+    */
+
+    'firebase' => [
+        'server_key' => env('FIREBASE_SERVER_KEY'),
+    ],
+
 ];

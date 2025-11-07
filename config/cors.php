@@ -1,21 +1,24 @@
 <?php
 return [
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*'],
     'allowed_methods' => ['*'],
     'allowed_origins' => [
-        'https://react-frontend-mauve-six.vercel.app',
         'http://localhost:3000',
         'http://localhost:3001',
+        'http://localhost:3002',
+        'http://localhost:3003',
         'http://127.0.0.1:3000',
         'http://127.0.0.1:3001',
+        'http://127.0.0.1:3002',
+        'http://127.0.0.1:3003',
     ],
+    // Allow any case for localhost using a regex pattern
     'allowed_origins_patterns' => [
-        'https://*.vercel.app',
-        'http://localhost:*',
-        'http://127.0.0.1:*',
+        '/^http:\/\/(localhost|LOCALHOST|[lL][oO][cC][aA][lL][hH][oO][sS][tT]):3001$/',
+        '/^http:\/\/(localhost|LOCALHOST|[lL][oO][cC][aA][lL][hH][oO][sS][tT]):3000$/',
     ],
     'allowed_headers' => ['*'],
-    'exposed_headers' => ['Authorization', 'X-Requested-With', 'Content-Type', 'Accept', 'Origin'],
-    'max_age' => 86400,
-    'supports_credentials' => true,
+    'exposed_headers' => [],
+    'max_age' => 0,
+    'supports_credentials' => false,
 ];

@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Newsletter extends Model
+{
+    protected $fillable = [
+        'title',
+        'content',
+        'subject',
+        'status',
+        'scheduled_at',
+        'sent_at',
+        'sent_count',
+        'created_by'
+    ];
+
+    protected $casts = [
+        'scheduled_at' => 'datetime',
+        'sent_at' => 'datetime',
+    ];
+
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function scopeDraft($query)
+    {
+        return $query->where('status', 'draft');
+    }
+
+    public function scopeSent($query)
+    {
+        return $query->where('status', 'sent');
+    }
+
+    public function scopeScheduled($query)
+    {
+        return $query->where('status', 'scheduled');
+    }
+}

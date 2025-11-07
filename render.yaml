@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: financial-dashboard-api
+    env: php
+    region: oregon
+    plan: free
+    buildCommand: "./render-build.sh"
+    startCommand: "php artisan serve --host=0.0.0.0 --port=$PORT"
+    healthCheckPath: /api/health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        sync: false
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: SESSION_DRIVER
+        value: cookie
+      - key: CACHE_DRIVER
+        value: file
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: DB_CONNECTION
+        value: mysql

@@ -2,22 +2,34 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubject
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasApiTokens;
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
 
     /**
-     * The attributes that are mass assignable.
+     * Return a key value array, containing any custom claims to be added to the JWT.
      *
-     * @var list<string>
+     * @return array
      */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
     protected $fillable = [
         'name',
         'email',
@@ -25,21 +37,11 @@ class User extends Authenticatable
         'role',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -48,75 +50,18 @@ class User extends Authenticatable
         ];
     }
 
-    /**
-     * Valid user roles
-     */
-    public const ROLES = ['admin', 'editor', 'user'];
-
-    /**
-     * Boot the model
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($user) {
-            // Set default role if not specified
-            if (empty($user->role)) {
-                $user->role = 'user';
-            }
-            
-            // Validate role
-            if (!in_array($user->role, self::ROLES)) {
-                throw new \InvalidArgumentException('Invalid role specified');
-            }
-        });
-
-        static::updating(function ($user) {
-            // Validate role on update
-            if (!in_array($user->role, self::ROLES)) {
-                throw new \InvalidArgumentException('Invalid role specified');
-            }
-        });
-    }
-
-    /**
-     * Check if user is an admin
-     */
     public function isAdmin(): bool
     {
-        return $this->role === 'admin';
+        return $this->role === 'Admin';
     }
 
-    /**
-     * Check if user is an editor
-     */
-    public function isEditor(): bool
-    {
-        return $this->role === 'editor';
-    }
-
-    /**
-     * Check if user has admin or editor privileges
-     */
-    public function canManageContent(): bool
-    {
-        return in_array($this->role, ['admin', 'editor']);
-    }
-
-    /**
-     * Relationship: User's watchlist items
-     */
     public function watchlists()
     {
         return $this->hasMany(Watchlist::class);
     }
 
-    /**
-     * Relationship: User's blog posts
-     */
-    public function blogPosts()
+    public function savedComparisons()
     {
-        return $this->hasMany(BlogPost::class);
+        return $this->hasMany(SavedComparison::class);
     }
 }

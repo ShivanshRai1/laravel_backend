@@ -96,26 +96,32 @@ class AdminController extends Controller
     public function createUser(Request $request): JsonResponse
     {
         try {
-            $request->validate([
+            \Log::info('createUser called', ['request' => $request->all()]);
+            $validated = $request->validate([
                 'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:8',
-                'role' => 'required|in:admin,editor,user'
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|string|min:6',
+                'role' => 'required|in:admin,editor,user',
             ]);
 
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-                'role' => $request->role,
-            ]);
+            \Log::info('Validation passed', ['validated' => $validated]);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'User created successfully',
-                'data' => $user
-            ], 201);
+            $user = new \App\Models\User();
+            $user->name = $validated['name'];
+            $user->email = $validated['email'];
+            $user->password = bcrypt($validated['password']);
+            $user->role = $validated['role'];
+            $user->save();
+
+            \Log::info('User saved', ['user' => $user]);
+
+            // Return only a simple success response to isolate error
+            return response()->json(['success' => true], 201);
         } catch (\Exception $e) {
+            // Log to laravel.log
+            \Log::error('Error in createUser', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            // Also output to console
+            error_log('Error in createUser: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to create user',
@@ -135,8 +141,8 @@ class AdminController extends Controller
             $request->validate([
                 'name' => 'sometimes|required|string|max:255',
                 'email' => 'sometimes|required|string|email|max:255|unique:users,email,' . $id,
-                'password' => 'sometimes|string|min:8',
-                'role' => 'sometimes|required|in:admin,editor,user'
+                'password' => 'sometimes|string|min:6',
+                'role' => 'sometimes|required|in:Admin,Editor,Registered,Guest'
             ]);
 
             $updateData = $request->only(['name', 'email', 'role']);

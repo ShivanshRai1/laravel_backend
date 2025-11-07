@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
@@ -43,15 +45,22 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        if (!Auth::attempt($credentials)) {
+        try {
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid credentials'
+                ], 401);
+            }
+        } catch (JWTException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid credentials'
-            ], 401);
+                'message' => 'Could not create token',
+                'error' => $e->getMessage()
+            ], 500);
         }
 
         $user = Auth::user();
-        $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
             'success' => true,
@@ -71,6 +80,10 @@ class AuthController extends Controller
      */
     public function adminLogin(Request $request)
     {
+        \Log::info('Admin login attempt', [
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+        ]);
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
@@ -104,7 +117,20 @@ class AuthController extends Controller
             ], 403);
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        try {
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid credentials'
+                ], 401);
+            }
+        } catch (JWTException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Could not create token',
+                'error' => $e->getMessage()
+            ], 500);
+        }
 
         return response()->json([
             'success' => true,
@@ -145,7 +171,18 @@ class AuthController extends Controller
             'role' => $request->role ?? 'user',
         ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        // Dispatch event for sending onboarding email
+        event(new \App\Events\UserRegistered($user));
+
+        try {
+            $token = JWTAuth::fromUser($user);
+        } catch (JWTException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Could not create token',
+                'error' => $e->getMessage()
+            ], 500);
+        }
 
         return response()->json([
             'success' => true,
@@ -165,8 +202,15 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+        } catch (JWTException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Could not log out user',
+                'error' => $e->getMessage()
+            ], 500);
+        }
         return response()->json([
             'success' => true,
             'message' => 'Logout successful'
@@ -178,8 +222,15 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
-        $user = $request->user();
-        
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+        } catch (JWTException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Could not fetch user',
+                'error' => $e->getMessage()
+            ], 401);
+        }
         return response()->json([
             'success' => true,
             'user' => [
@@ -210,6 +261,17 @@ class AuthController extends Controller
             ], 422);
         }
 
+        // Local/dev shortcut: generate token and return it in response
+        $email = $request->input('email');
+        $user = User::where('email', $email)->first();
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found'
+            ], 404);
+        }
+        $token = app('auth.password.broker')->createToken($user);
+
         $status = Password::sendResetLink(
             $request->only('email')
         );
@@ -217,7 +279,9 @@ class AuthController extends Controller
         return $status === Password::RESET_LINK_SENT
             ? response()->json([
                 'success' => true,
-                'message' => 'Password reset link sent to your email'
+                'message' => 'Password reset link sent to your email',
+                'token' => $token,
+                'email' => $email
             ])
             : response()->json([
                 'success' => false,

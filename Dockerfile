@@ -21,7 +21,10 @@ WORKDIR /var/www
 COPY . .
 
 # Install PHP dependencies
-RUN composer install --optimize-autoloader --no-dev --ignore-platform-reqs
+RUN composer install --optimize-autoloader --no-dev --ignore-platform-reqs --no-scripts
+
+# Run package discovery separately
+RUN php artisan package:discover --ansi || true
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www

@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     libzip-dev \
     zip \
+    default-mysql-client \
     unzip \
     && docker-php-ext-configure gd \
     && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip

@@ -11,7 +11,8 @@ return [
         'http://127.0.0.1:3001',
         'http://127.0.0.1:3002',
         'http://127.0.0.1:3003',
-        env('FRONTEND_URL', 'https://dashboard-react-main.netlify.app'),
+        'https://dashboard-react-main.netlify.app',
+        env('FRONTEND_URL', 'https://dashboard-react-main.netlify.app')
     ],
     // Allow any case for localhost using a regex pattern
     'allowed_origins_patterns' => [
